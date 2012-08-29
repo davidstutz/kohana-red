@@ -42,7 +42,9 @@ class Model_Red_User extends ORM
 	public function filters()
 	{
 		return array(
-			'password' => array(array(array(Red::instance(), 'hash'))),
+			'password' => array(
+				array('Red::hash', array(':value', $this))
+			),
 		);
 	}
 	

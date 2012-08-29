@@ -1,5 +1,7 @@
 # Configuration
 
+See [Models](models) for table and model configuration.
+
 See the configuration file, following configuration options are given:
 
 ## Hash Configuration
@@ -7,12 +9,35 @@ See the configuration file, following configuration options are given:
 	'hash'  => array(
 		'method' => 'sha256',
 		'key' => '',
-		'iterations' => 1000,
+		'iterations' => 10000,
 	),
 	
 * method: Defines the hash method used. **md5 should not be used!** sha256 or sha512 are good choices.
 * key: The key used for hmac. **Should be filled with a unique key!**
 * iterations: The number of hash iterations. Multiple hash iterations will improve security. Thus to a good performance of hash method implementation and PHP high numbers can be used! (e.g. 1000 iterations)
+
+## Salt
+
+	'salt' => array(
+		'application' => '',
+	),
+	
+* application: A salt for the whole application. ALl passwords of each user will be salted with this salt. Take a long enough random string.
+
+User salts can be added manually. The user salt is saved in the 'salt' column of the user table. If this column does not exist, user salts will not be used. To use user salts you have to manually add a salt to each user with his creation.
+
+Note the following if you are going to use user salts:
+
+	$user = ORM::factory('user');
+	// The salt need to be added before the password is added!
+	$user->sale = $salt;
+	$user->values(array(
+		// When adding salt here it will not work.
+		// 'salt' => $salt,
+		'email' => 'davidstutz@web.de',
+		'password' => '8JFs$df238d(§H3)', // Take a secure password!
+	));
+	$user->save();
 
 ## Lifetime
 

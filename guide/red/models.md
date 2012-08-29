@@ -11,5 +11,6 @@ All models should be extended using the following scheme:
 
 	class Model_User extends Model_Red_User
 	
-By extending the models additional relationhsips and methods can be added.
+By extending the models additional relationhsips and methods can be added. Further the used table can be changed.
+[SQL Scheme](sql-scheme) shows the basic tables which can be extended by further columns if needed. The 'salt' column in the user table is optional.
 	

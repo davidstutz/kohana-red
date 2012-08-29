@@ -47,6 +47,11 @@ class Kohana_Red
 	protected $_config;
 
 	/**
+	 * @var	object	user
+	 */
+	protected $_user = FALSE;
+
+	/**
 	 * Loads Session and configuration options.
 	 */
 	public function __construct()
@@ -72,16 +77,19 @@ class Kohana_Red
 	 */
 	public function get_user()
 	{
-		$id = $this->_session->get($this->_config['session']['key'], FALSE);
-		
-		if ($id === FALSE)
+		if ($this->_user === FALSE)
 		{
-			return FALSE;
+			$id = $this->_session->get($this->_config['session']['key'], FALSE);
+			
+			if ($id === FALSE)
+			{
+				return FALSE;
+			}
+			
+			$this->_user = ORM::factory('user', $id);
 		}
 		
-		$user = ORM::factory('user', $id);
-		
-		return $user->loaded() ? $user : FALSE;
+		return $this->_user->loaded() ? $this->_user : FALSE;
 	}
 
 	/**	
@@ -91,15 +99,17 @@ class Kohana_Red
 	 * @param	string	string to hash
 	 * @return	string	hash
 	 */
-	public function hash($password)
+	public static function hash($password, $user)
 	{
+		$config = Kohana::$config->load('red');
+		
 		/**
 		 * First check for hash key.
 		 * If no hash key is given or its FALSE throw an exception.
 		 * Then Red is not properly configured.
 		 */
-		if (!isset($this->_config['hash']['key'])
-			OR empty($this->_config['hash']['key']))
+		if (!isset($config['hash']['key'])
+			OR empty($config['hash']['key']))
 		{
 			throw new Red_Exception('A valid hash key must be set in your Red config.');
 		}
@@ -107,8 +117,8 @@ class Kohana_Red
 		/**
 		 * Now check for login key.
 		 */
-		if (!isset($this->_config['login']['key'])
-			OR empty($this->_config['login']['key']))
+		if (!isset($config['login']['key'])
+			OR empty($config['login']['key']))
 		{
 			throw new Red_Exception('A valid login key must be set in your Red config.');
 		}
@@ -116,12 +126,13 @@ class Kohana_Red
 		/**
 		 * For hash strengthening iterations are done.
 		 */
-		$password = hash_hmac($this->_config['hash']['method'], $password, $this->_config['hash']['key']);
-		for ($i = 1; $i < $this->_config['hash']['iterations']; $i++)
-		{
-			$password = hash_hmac($this->_config['hash']['method'], $password, $this->_config['hash']['key']);
-		}
-
+		$password = $config['salt']['application'] . $password . (isset($user->salt) ? $user->salt : '');
+		$i = 0;
+		do {
+			$password = hash_hmac($config['hash']['method'], $password, $config['hash']['key']);
+			$i++;
+		} while($i < $config['hash']['iterations']);
+		
 		return $password;
 	}
 
@@ -177,7 +188,7 @@ class Kohana_Red
 			return FALSE;
 		}
 		
-		if ($user->password !== $this->hash($password))
+		if ($user->password !== Red::hash($password, $user))
 		{
 			return FALSE;
 		}

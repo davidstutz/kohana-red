@@ -38,6 +38,19 @@ For user creation:
 	
 	$user->save();
 
+If you are using user salts:
+
+	$user = ORM::factory('user');
+	// The salt need to be added before the password is added!
+	$user->sale = $salt;
+	$user->values(array(
+		// When adding salt here it will not work.
+		// 'salt' => $salt,
+		'email' => 'davidstutz@web.de',
+		'password' => '8JFs$df238d(§H3)', // Take a secure password!
+	));
+	$user->save();
+
 ## User Login
 
 The form:
@@ -77,6 +90,8 @@ In the controller:
             // Show error message ...
         }
     }
+    
+Login is currently only possible with the user's email.
     
 ## Check User Logged In
 
@@ -120,4 +135,4 @@ To have access to the currently logged in user the Red class is implemented as s
 	}
 	
 	// Hash some passwords or similar:
-	$hashed = Red::instance()->hash(...);
+	$hashed = Red::hash($password, $user);

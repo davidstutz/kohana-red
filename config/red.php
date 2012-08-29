@@ -23,7 +23,19 @@ return array(
 	'hash'  => array(
 		'method' => 'sha256',
 		'key' => '',
-		'iterations' => 1000,
+		'iterations' => 10000,
+	),
+	
+	/**
+	 * Salt configuration.
+	 * 
+	 * The application salt is added to each password.
+	 * It should have at least 20 random characters.
+	 * A user salt can be added manually in the 'salt' column of
+	 * the suer table and should contain around 20 random characters.
+	 */
+	'salt' => array(
+		'application' => '',
 	),
 	
 	/**
