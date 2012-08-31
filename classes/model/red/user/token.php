@@ -16,6 +16,14 @@ class Model_Red_User_Token extends ORM
 	protected $_table = 'user_tokens';
 
 	/**
+	 * @var	array 	created column
+	 */
+	protected $_created_column = array(
+		'column' => 'created',
+		'format' => 'U',
+	);
+
+	/**
 	 * @var	array 	belongs to
 	 */
 	protected $_belongs_to = array(
