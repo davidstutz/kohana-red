@@ -1,6 +1,6 @@
 # SQL Scheme
 
-Both for the group and the user additional required fields can be added. first_name, last_name and salt are optional. If the salt column does not exist user salts will not be used. first_name and last_name could be replaced by a username or similar. But note that login is currently only supported using email.
+Both for the group and the user additional required fields can be added. first_name, last_name and salt are optional. If the salt column does not exist user salts will not be used. first_name and last_name could be replaced by a username or similar. But note that login is currently only supported with email.
 
 	-- -----------------------------------------------------
 	-- Table `user_groups`
