@@ -165,7 +165,7 @@ class Kohana_Red
 		 * Will register the login before evaluating.
 		 * Will save users ip and time of login.
 		 */
-		ORM::factory('user_login')
+		$login = ORM::factory('user_login')
 			->values(array(
 				'ip' => hash_hmac($this->_config['login']['method'], Request::$client_ip, $this->_config['login']['key']),
 				'agent' => hash_hmac($this->_config['login']['method'], Request::$user_agent, $this->_config['login']['key']),
@@ -212,6 +212,12 @@ class Kohana_Red
 		$this->_session->regenerate();
 
 		$this->_session->set($this->_config['session']['key'], $user->id);
+		
+		/**
+		 * Update the login.
+		 */
+		$login->user = $user;
+		$login->update();
 		
 		return $user;
 	}

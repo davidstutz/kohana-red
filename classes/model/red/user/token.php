@@ -37,7 +37,7 @@ class Model_Red_User_Token extends ORM
 	{
 		parent::__construct($id);
 
-		if (mt_rand(1, Kohana::$config->load('acl.gc')) === 1)
+		if (mt_rand(1, Kohana::$config->load('red.gc')) === 1)
 		{
 			/* Delete expired tokens. */
 			DB::delete($this->_table_name)

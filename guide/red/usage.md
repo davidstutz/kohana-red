@@ -44,7 +44,7 @@ If you are using user salts:
 	// The salt need to be added before the password is added!
 	$user->sale = $salt;
 	$user->values(array(
-		// When adding salt here it will not work.
+		// When adding salt here it will not work:
 		// 'salt' => $salt,
 		'email' => 'davidstutz@web.de',
 		'password' => '8JFs$df238d(§H3)', // Take a secure password!
@@ -67,11 +67,10 @@ The form:
 
 In the controller:
 
-	// In your controller:
 	// Check whether the user is already logged in:
 	if (Red::instance()->logged_in())
 	{
-		$this->request->redirect(...);
+		$this->redirect(...);
 	}
 	
     if (Request::POST === $this->request->method())
@@ -83,7 +82,7 @@ In the controller:
         if (Red::instance()->login($this->request->post('email'), $this->request->post('password'), $remember))
         {
         	//Login successful.
-        	$this->request->redirect(...);
+        	$this->redirect(...);
         }
         else
         {
@@ -95,7 +94,7 @@ Login is currently only possible with the user's email.
     
 ## Check User Logged In
 
-To check whether a user is login:
+To check whether a user is logged in:
 
 	if (Red::instance()->logged_in())
 	{
@@ -109,7 +108,7 @@ To logout the currently logged in user:
 	// Logout the current logged in user.
 	Red::instance()->logout();
 	
-Additionally the current session canbe destroyed by setting a flag:
+Additionally the current session can be destroyed by setting a flag:
 
 	// Additionally destroy the session.
 	Red::instance()->logout(TRUE);

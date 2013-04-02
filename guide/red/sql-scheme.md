@@ -8,7 +8,7 @@ Both for the group and the user additional required fields can be added. first_n
 	CREATE  TABLE `user_groups` (
 	  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
 	  `name` VARCHAR(32) NULL ,
-	  `description` TEXT NULL ,
+	  -- Additional fields can be added.
 	  PRIMARY KEY (`id`) ,
 	  UNIQUE INDEX `uniq_name` (`name` ASC) );
 	
@@ -26,7 +26,6 @@ Both for the group and the user additional required fields can be added. first_n
 	  -- Additional fields can be added.
 	  `group_id` INT(11) UNSIGNED NULL ,
 	  PRIMARY KEY (`id`) ,
-	  FULLTEXT (`email`, `first_name`, `last_name`) ,
 	  UNIQUE INDEX `uniq_email` (`email` ASC) ,
 	  INDEX `fk_users_group_id` (`group_id` ASC) ,
 	  CONSTRAINT `fk_users_group_id`
@@ -46,6 +45,7 @@ Both for the group and the user additional required fields can be added. first_n
 	  `agent` VARCHAR(65) NOT NULL ,
 	  `login` VARCHAR(255) NOT NULL ,
 	  `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+	  `user_id` INT(11) DEFAULT NULL ,
 	  PRIMARY KEY (`id`))
 	DEFAULT CHARACTER SET = utf8;
 	

@@ -30,9 +30,9 @@ Note the following if you are going to use user salts:
 
 	$user = ORM::factory('user');
 	// The salt need to be added before the password is added!
-	$user->sale = $salt;
+	$user->salt = $salt;
 	$user->values(array(
-		// When adding salt here it will not work.
+		// When adding salt here it will not work:
 		// 'salt' => $salt,
 		'email' => 'davidstutz@web.de',
 		'password' => '8JFs$df238d(§H3)', // Take a secure password!
