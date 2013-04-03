@@ -198,10 +198,17 @@ class Kohana_Red
 		 */
 		if ($remember === TRUE)
 		{
+			$unique = sha1(uniqid(Text::random('alnum', 32), TRUE));
+			while (ORM::factory('user_token')->where('token', '=', $unique)->count_all() > 0)
+			{
+				$unique = sha1(uniqid(Text::random('alnum', 32), TRUE));
+			}
+			
 			$token = ORM::factory('user_token')
 				->values(array(
-					'user_id'    => $user->id,
-					'expires'    => time() + $this->_config['lifetime'],
+					'token' => $unique,
+					'user_id' => $user->id,
+					'expires' => time() + $this->_config['lifetime'],
 					'user_agent' => hash_hmac($this->_config['hash']['method'], Request::$user_agent, $this->_config['hash']['key']),
 				))
 				->create();

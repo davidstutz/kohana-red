@@ -50,19 +50,4 @@ class Model_Red_User_Token extends ORM
 			$this->delete();
 		}
 	}
-
-	/**
-	 * Create token.
-	 */
-	protected function create_token()
-	{
-		do
-		{
-			$token = sha1(uniqid(Text::random('alnum', 32), TRUE));
-		}
-		while(ORM::factory('user_token', array('token' => $token))->loaded());
-
-		return $token;
-	}
-
 }
