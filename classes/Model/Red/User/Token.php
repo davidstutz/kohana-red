@@ -32,6 +32,8 @@ class Model_Red_User_Token extends ORM
 
 	/**
 	 * Handles garbage collection and deleting of expired objects.
+   * 
+   * @param int id
 	 */
 	public function __construct($id = NULL)
 	{
@@ -50,4 +52,22 @@ class Model_Red_User_Token extends ORM
 			$this->delete();
 		}
 	}
+  
+  /**
+   * Creates a new token by generating a unique token string.
+   * 
+   * @param validation  validation
+   */
+  public function create(Validation $validation = NULL)
+  {
+    do
+    {
+      $token = sha1(uniqid(Text::random('alnum', 32), TRUE));
+    }
+    while (ORM::factory('user_token')->where('token', '=', $unique)->count_all() > 0);
+    
+    $this->token = $token;
+    
+    return parent::create($validation);
+  }
 }

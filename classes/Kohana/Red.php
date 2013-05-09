@@ -22,8 +22,7 @@ class Kohana_Red
 	 */
 	public static function instance()
 	{
-		if (Red::$_instance === FALSE
-			OR !is_object(Red::$_instance))
+		if (Red::$_instance === FALSE OR !is_object(Red::$_instance))
 		{
 			Red::$_instance = new Red();
 		}
@@ -57,21 +56,12 @@ class Kohana_Red
 	public function __construct()
 	{
 		$this->_config = Kohana::$config->load('red');
-		
 		$this->_session = Session::instance($this->_config['session']['type']);
 	}
 
 	/**
 	 * Gets the currently logged in user from the session.
 	 * Returns NULL if no user is currently logged in.
-	 *
-	 * Usage:
-	 * 	$user = Red::instance()->get_user();
-	 * 
-	 * 	if (!$user)
-	 * 	{
-	 * 		// ...
-	 * 	}
 	 * 
 	 * @return	mixed	current user or FALSE
 	 */
@@ -81,9 +71,12 @@ class Kohana_Red
 		{
 			$id = $this->_session->get($this->_config['session']['key'], FALSE);
 			
+      /**
+       * If no session is active check for a remembered user using auto_login.
+       */
 			if ($id === FALSE)
 			{
-				return FALSE;
+				return $this->auto_login();
 			}
 			
 			$this->_user = ORM::factory('user', $id);
@@ -108,8 +101,7 @@ class Kohana_Red
 		 * If no hash key is given or its FALSE throw an exception.
 		 * Then Red is not properly configured.
 		 */
-		if (!isset($config['hash']['key'])
-			OR empty($config['hash']['key']))
+		if (!isset($config['hash']['key']) OR empty($config['hash']['key']))
 		{
 			throw new Red_Exception('A valid hash key must be set in your Red config.');
 		}
@@ -117,8 +109,7 @@ class Kohana_Red
 		/**
 		 * Now check for login key.
 		 */
-		if (!isset($config['login']['key'])
-			OR empty($config['login']['key']))
+		if (!isset($config['login']['key']) OR empty($config['login']['key']))
 		{
 			throw new Red_Exception('A valid login key must be set in your Red config.');
 		}
@@ -148,6 +139,7 @@ class Kohana_Red
 	{
 		/**
 		 * First check login delay.
+     * Note: The login delay is not based on the email the user try to login with.
 		 */
 		$login = ORM::factory('user_login')
 			->where('ip', '=', hash_hmac($this->_config['login']['method'], Request::$client_ip, $this->_config['login']['key']))
@@ -162,7 +154,7 @@ class Kohana_Red
 		
 		/**
 		 * Will register the login before evaluating.
-		 * Will save users ip and time of login.
+		 * Will save users ip, email and time of login.
 		 */
 		$login = ORM::factory('user_login')
 			->values(array(
@@ -194,18 +186,12 @@ class Kohana_Red
 		
 		/**
 		 * Remember the user. Create token for this purpose.
+     * Save the unique token in a cookie.
 		 */
 		if ($remember === TRUE)
 		{
-			$unique = sha1(uniqid(Text::random('alnum', 32), TRUE));
-			while (ORM::factory('user_token')->where('token', '=', $unique)->count_all() > 0)
-			{
-				$unique = sha1(uniqid(Text::random('alnum', 32), TRUE));
-			}
-			
 			$token = ORM::factory('user_token')
 				->values(array(
-					'token' => $unique,
 					'user_id' => $user->id,
 					'expires' => time() + $this->_config['lifetime'],
 					'user_agent' => hash_hmac($this->_config['hash']['method'], Request::$user_agent, $this->_config['hash']['key']),
@@ -214,13 +200,16 @@ class Kohana_Red
 
 			Cookie::set($this->_config['autologin']['key'], $token->token, $this->_config['lifetime']);
 		}
-
+  
+    /**
+     * Store the user id in the current session.
+     * This will indicate whether the user is logged in or not.
+     */
 		$this->_session->regenerate();
-
-		$this->_session->set($this->_config['session']['key'], $user->id);
+    $this->_session->set($this->_config['session']['key'], $user->id);
 		
 		/**
-		 * Update the login.
+		 * Store a reference to the user with the current login.
 		 */
 		$login->user = $user;
 		$login->update();
@@ -246,7 +235,7 @@ class Kohana_Red
 			
 			$this->_session->regenerate();
 		}
-
+    
 		if ($token = Cookie::get($this->_config['autologin']['key'], FALSE))
 		{
 			Cookie::delete($this->_config['autologin']['key']);
@@ -271,18 +260,27 @@ class Kohana_Red
 	{
 		if ($token = Cookie::get($this->_config['autologin']['key']))
 		{
+		  /**
+       * The corresponding token will be laoded.
+       * If the token is expired it will be deleted.
+       */
 			$token = ORM::factory('user_token', array('token' => $token));
 
-			if ($token->loaded()
-				AND $token->user->loaded())
+			if ($token->loaded() AND $token->user->loaded())
 			{
 				if ($token->user_agent === sha1(Request::$user_agent))
 				{
+				  /**
+           * If the token was deleted a new token is needed.
+           * If the token was not deleted the token will just be updated.
+           */
 					$token->save();
-
-					Cookie::set($this->_config['autologin']['key'], $token->token, $token->expires - time());
-
-					return $this->complete_login($token->user);
+          Cookie::set($this->_config['autologin']['key'], $token->token, $token->expires - time());
+        
+          $this->_session->regenerate();
+          $this->_session->set($this->_config['session']['key'], $token->user->id);
+          
+					return $token->user;
 				}
 
 				$token->delete();
@@ -293,13 +291,7 @@ class Kohana_Red
 	}
 
 	/**
-	 * Checks if a session is active.
-	 *
-	 * Usage:
-	 * 	if (!Red::instance()->logged_in())
-	 * 	{
-	 * 		// Redirect...
-	 * 	}
+	 * Checks if a session is active (if a user is currenlty logged in).
 	 * 
 	 * @return  boolean
 	 */
