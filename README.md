@@ -12,7 +12,7 @@ For documentation see the guide/ subfolder or use Kohana's [Userguide](https://g
 
 ## License
 
-Copyright (c) 2012, David Stutz
+Copyright (c) 2013, David Stutz
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

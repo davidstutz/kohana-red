@@ -6,18 +6,18 @@ The following code snppets expect that you have extended all models with the fol
 
 The code snippets are also based on basic knowledge of Kohana's ORM module.
 
-## Group Creation
+## Role Creation
 
 Groups can be inserted manually via SQL Query or also using PHP:
 	
-	$group = ORM::factory('user_group');
+	$role = ORM::factory('user_role');
 	
-	$group->values(array(
+	$role->values(array(
 		'name' => 'user', // Name should be lowercase without whitespace.
 		'description' => 'Normal user groupÄ,
 	));
 	
-	$group->save();
+	$role->save();
 
 ## User Creation
 
@@ -34,7 +34,7 @@ For user creation:
 	));
 	
 	// Assign the 'user' group to the new user.
-	$user->group = ORM::factory('user_group', array('name' => 'user'));
+	$user->add('roles', ORM::factory('user_group', array('name' => 'user')));
 	
 	$user->save();
 
@@ -67,37 +67,32 @@ The form:
 
 In the controller:
 
-	// Check whether the user is already logged in:
-	if (Red::instance()->logged_in())
-	{
+	// Check whether the user is already logged in or get auto login working.
+	if (Red::instance()->logged_in()) {
 		$this->redirect(...);
 	}
 	
-    if (Request::POST === $this->request->method())
-    {
+    if (Request::POST === $this->request->method()) {
     	// Get the remember option:
         $remember = Arr::get($this->request->post(), 'remember', FALSE);
 		
 		// Login the user with email and password:
-        if (Red::instance()->login($this->request->post('email'), $this->request->post('password'), $remember))
-        {
+        if (Red::instance()->login($this->request->post('email'), $this->request->post('password'), $remember)) {
         	//Login successful.
         	$this->redirect(...);
         }
-        else
-        {
+        else {
             // Show error message ...
         }
     }
     
 Login is currently only possible with the user's email.
     
-## Check User Logged In
+## Check User is Logged In
 
 To check whether a user is logged in:
 
-	if (Red::instance()->logged_in())
-	{
+	if (Red::instance()->logged_in()) {
 		// User is logged in ...
 	}
     
@@ -120,14 +115,12 @@ To have access to the currently logged in user the Red class is implemented as s
 	// Get the current user. Will return the ORM model or FALSE if no user is logged in.
 	$user = Red::instance()->get_user();
 	
-	if ($user)
-	{
+	if ($user) {
 		echo $user->id;
 	}
 	
 	// Check whether a user is logged in:
-	if (Red::instance()->logged_in())
-	{
+	if (Red::instance()->logged_in()) {
 		// User is logged in.
 		// get_user() will return the user model:
 		$user = Red::instance()->get_user();

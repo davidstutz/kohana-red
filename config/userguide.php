@@ -3,10 +3,10 @@
 /**
  * Userguide configuration for red module.
  * 
- * @package		Red
- * @author		David Stutz
- * @copyright	(c) 2012 David Stutz
- * @license		http://opensource.org/licenses/bsd-3-clause
+ * @package     Red
+ * @author      David Stutz
+ * @copyright   (c) 2013 David Stutz
+ * @license     http://opensource.org/licenses/bsd-3-clause
  */
 return array(
 	'modules' => array(
@@ -14,7 +14,7 @@ return array(
 			'enabled' => TRUE,
 			'name' => 'Red',
 			'description' => 'ORM based Authentication module.',
-			'copyright' => '(c) 2012 David Stutz',
+			'copyright' => '(c) 2013 David Stutz',
 		),
 	)
 );

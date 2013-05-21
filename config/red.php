@@ -3,15 +3,15 @@
 /**
  * Red configuration.
  * 
- * @package		Red
- * @author		David Stutz
- * @copyright	(c) 2012 David Stutz
- * @license		http://opensource.org/licenses/bsd-3-clause
+ * @package     Red
+ * @author      David Stutz
+ * @copyright   (c) 2013 David Stutz
+ * @license     http://opensource.org/licenses/bsd-3-clause
  */
 return array(
 
 	/**
-	 * Hash configuration.
+	 * Password hashing configurations.
 	 * 
 	 * The method defines used hash algorithms. 
 	 * Do not use md5 or sha1, these are not considered secure any more.
@@ -20,31 +20,23 @@ return array(
 	 * The nubmer of iterations. Thus to a good speed of most hash algorithms ~1000
 	 * iterations are not any problem and considered secure.
 	 */
-	'hash'  => array(
+	'password'  => array(
 		'method' => 'sha256',
 		'key' => '',
 		'iterations' => 10000,
+		/**
+         * Salt configuration.
+         * 
+         * The application wide salt (configure here) is added to each password.
+         * It should have at least 20 random characters.
+         * A user salt can be added manually in the 'salt' column of
+         * the suer table and should contain around 20 random characters.
+         */
+		'salt' => '', 
 	),
 	
 	/**
-	 * Salt configuration.
-	 * 
-	 * The application salt is added to each password.
-	 * It should have at least 20 random characters.
-	 * A user salt can be added manually in the 'salt' column of
-	 * the suer table and should contain around 20 random characters.
-	 */
-	'salt' => array(
-		'application' => '',
-	),
-	
-	/**
-	 * Lifetime. 
-	 */
-	'lifetime' => 1209600,
-	
-	/**
-	 * Session configuration.
+	 * Session configuration: Session type to use and session key used.
 	 */
 	'session' => array(
 		'type' => 'database',
@@ -52,14 +44,7 @@ return array(
 	),
 	
 	/**
-	 * Key used for autologin.
-	 */
-	'autologin' => array(
-		'key' => '',
-	),
-	
-	/**
-	 * Options concerning the login.
+	 * Options concerning the logins.
 	 */
 	'login' => array(
 		'method' => 'sha256', // Method for hashing IPs and user agents.
@@ -68,8 +53,16 @@ return array(
 		'store' => 604800, // Store logins for x seconds.
 	),
 	
-	/**
-	 * Garbace collector for tokens.
-	 */
-	'gc' => 100,
+    /**
+     * Tokens are used to remember a user looged in.
+     * This is done using cookies. A token is saved in the database and a reference
+     * to this token is set in a cookie with the key cookie_key.
+     */
+    'token' => array(
+        'method' => 'sha256',
+        'key' => '',
+        'lifetime' => 1209600, // Lifetime of the cookie and the token.
+        'cookie_key' => '', // The key for the cookie to use.
+        'gc' => 100, // Garbage collector is run in 1/100 of times.
+    ),
 );
