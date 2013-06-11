@@ -19,9 +19,17 @@ class Model_Red_User_Login extends ORM {
      */
     protected $_belongs_to = array(
         'user' => array(
-            'foreign_key' => 'username',
+            'foreign_key' => 'user_id',
             'model' => 'user',
         ),
+    );
+
+    /**
+     * Created column.
+     */
+    protected $_created_column = array(
+        'column' => 'created',
+        'format' => 'U',
     );
 
     /**
@@ -31,7 +39,7 @@ class Model_Red_User_Login extends ORM {
         parent::__construct($id);
 
         $config = Kohana::$config->load('red.login');
-        DB::delete($this->_table_name)->where('time', '<', time() - $config['store'])->execute($this->_db);
+        DB::delete($this->_table_name)->where('created', '<', time() - $config['store'])->execute($this->_db);
     }
 
 }

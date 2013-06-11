@@ -61,7 +61,7 @@ Both for the group and the user additional required fields can be added. first_n
 	  `ip` VARCHAR(65) NOT NULL ,
 	  `agent` VARCHAR(65) NOT NULL ,
 	  `login` VARCHAR(255) NOT NULL ,
-	  `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+	  `created` INT(11) UNSIGNED NOT NULL ,
 	  `user_id` INT(11) DEFAULT NULL ,
 	  PRIMARY KEY (`id`))
 	DEFAULT CHARACTER SET = utf8;

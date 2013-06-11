@@ -116,6 +116,7 @@ class Kohana_Red {
         /**
          * For hash strengthening iterations are done.
          * Using do-while so the password is as minimum hashed once.
+         * The application and user salt is applied in each iteration.
          */
         $i = 0;
         do {
@@ -141,7 +142,7 @@ class Kohana_Red {
          */
         $login = ORM::factory('user_login')->where('ip', '=', hash_hmac($this->_config['login']['method'], Request::$client_ip, $this->_config['login']['key']))
             ->and_where('agent', '=', hash_hmac($this->_config['login']['method'], Request::$user_agent, $this->_config['login']['key']))
-            ->and_where('time', '>', date('Y-m-d H:i:s', time() - $this->_config['login']['delay']))
+            ->and_where('created', '>', time() - $this->_config['login']['delay'])
             ->find();
 
         if ($login->loaded()) {
