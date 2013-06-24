@@ -3,17 +3,6 @@
 Both for the group and the user additional required fields can be added. first_name, last_name and salt are optional. If the salt column does not exist user salts will not be used. first_name and last_name could be replaced by a username or similar. But note that login is currently only supported with email.
 
     -- -----------------------------------------------------
-    -- Table `user_roles`
-    -- -----------------------------------------------------
-    CREATE  TABLE `user_groups` (
-      `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
-      `name` VARCHAR(32) NULL ,
-      -- Additional fields can be added ...
-      PRIMARY KEY (`id`) ,
-      UNIQUE INDEX `uniq_name` (`name` ASC) );
-    
-    
-    -- -----------------------------------------------------
     -- Table `users`
     -- -----------------------------------------------------
     CREATE  TABLE `users` (
@@ -28,6 +17,15 @@ Both for the group and the user additional required fields can be added. first_n
       UNIQUE INDEX `uniq_email` (`email` ASC) )
     DEFAULT CHARACTER SET = utf8;
     
+    -- -----------------------------------------------------
+    -- Table `user_roles`
+    -- -----------------------------------------------------
+    CREATE  TABLE `user_groups` (
+      `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ,
+      `name` VARCHAR(32) NULL ,
+      -- Additional fields can be added ...
+      PRIMARY KEY (`id`) ,
+      UNIQUE INDEX `uniq_name` (`name` ASC) );
     
     -- -----------------------------------------------------
     -- Table `users_user_roles`
@@ -51,7 +49,6 @@ Both for the group and the user additional required fields can be added. first_n
         ON UPDATE NO ACTION)
     DEFAULT CHARACTER SET = utf8
     COLLATE = utf8_general_ci;
-    
     
     -- -----------------------------------------------------
     -- Table `user_logins`

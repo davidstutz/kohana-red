@@ -9,7 +9,7 @@ The code snippets are also based on basic knowledge of Kohana's ORM module.
 ## Role Creation
 
 Groups can be inserted manually via SQL Query or also using PHP:
-	
+
 	$role = ORM::factory('user_role');
 	
 	$role->values(array(
@@ -102,7 +102,7 @@ To logout the currently logged in user:
 
 	// Logout the current logged in user.
 	Red::instance()->logout();
-	
+
 Additionally the current session can be destroyed by setting a flag:
 
 	// Additionally destroy the session.

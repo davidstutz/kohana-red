@@ -228,7 +228,7 @@ class Kohana_Red {
          * Do not forget to delete the remember me cookie and appropriate token
          * in the database. So the user is not logged in automatically again.
          */
-        if ($token = Cookie::get($this->_config['token']['cookie_key'], FALSE)) {
+        if (FALSE !== ($token = Cookie::get($this->_config['token']['cookie_key'], FALSE))) {
             Cookie::delete($this->_config['token']['cookie_key']);
 
             $token = ORM::factory('user_token', array('token' => $token));
