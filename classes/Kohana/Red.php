@@ -172,7 +172,7 @@ class Kohana_Red {
         if (!$user->loaded()) {
             return FALSE;
         }
-
+        
         if ($user->password !== Red::hash($password, $user)) {
             return FALSE;
         }
@@ -204,7 +204,7 @@ class Kohana_Red {
          */
         $login->user = $user;
         $login->update();
-
+        
         return $user;
     }
 
@@ -228,7 +228,7 @@ class Kohana_Red {
          * Do not forget to delete the remember me cookie and appropriate token
          * in the database. So the user is not logged in automatically again.
          */
-        if (FALSE !== ($token = Cookie::get($this->_config['token']['cookie_key'], FALSE))) {
+        if ($token = Cookie::get($this->_config['token']['cookie_key'], FALSE)) {
             Cookie::delete($this->_config['token']['cookie_key']);
 
             $token = ORM::factory('user_token', array('token' => $token));
