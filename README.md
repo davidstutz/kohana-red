@@ -8,7 +8,9 @@ Red is part of a set of Kohana modules:
 * [Blue](https://github.com/davidstutz/kohana-blue): Red based user configuration module.
 * [Yellow](https://github.com/davidstutz/kohana-yellow): Green based logging solution.
 
-For documentation see the guide/ subfolder or use Kohana's [Userguide](https://github.com/kohana/userguide) module.
+An introduction can be found [here](http://davidstutz.de/introduction-to-kohana-authentication-using-red/).
+
+For full documentation see the guide/ subfolder or use Kohana's [Userguide](https://github.com/kohana/userguide) module.
 
 ## License
 
