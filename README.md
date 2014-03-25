@@ -14,7 +14,7 @@ For full documentation see the guide/ subfolder or use Kohana's [Userguide](http
 
 ## License
 
-Copyright (c) 2013, David Stutz
+Copyright (c) 2013 - 2014 David Stutz
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
