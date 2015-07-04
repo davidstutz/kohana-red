@@ -1,5 +1,5 @@
 {
-    "name": "kohana/red",
+    "name": "davidstutz/kohana-red",
     "type": "kohana-module",
     "version": "1.0.0",
     "description": "Secure authentication module for Kohana.",
