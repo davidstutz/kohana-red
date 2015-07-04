@@ -1,0 +1,27 @@
+{
+    "name": "kohana/red",
+    "type": "kohana-module",
+    "version": "1.0.0",
+    "description": "Secure authentication module for Kohana.",
+    "homepage": "https://davidstutz.de",
+    "license": "BSD-3-Clause",
+    "keywords": ["kohana", "framework", "authentication"],
+    "authors": [
+        {
+            "name": "David Stutz",
+            "email": "davidstutz@web.de",
+            "homepage": "https://davidstutz.de",
+            "role": "developer"
+        }
+    ],
+    "support": {
+        "issues": "http://github.com/davidstutz/kohana-red",
+        "source": "http://github.com/davidstutz/kohana-red"
+    },
+    "require": {
+        "composer/installers": "~1.0",
+        "php": ">=5.3.3",
+        "kohana/core": ">=3.3",
+        "kohana/orm": ">=3.3"
+    }
+}
