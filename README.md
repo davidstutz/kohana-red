@@ -12,6 +12,22 @@ An introduction can be found [here](http://davidstutz.de/introduction-to-kohana-
 
 For full documentation see the guide/ subfolder or use Kohana's [Userguide](https://github.com/kohana/userguide) module.
 
+## Composer
+
+Installation via composer:
+
+    {
+        "repositories": [
+            {
+                "type": "vcs",
+                "url": "https://github.com/davidstutz/kohana-red"
+            }
+        ],
+        "require": {
+            "davidstutz/kohana-red": "dev-master"
+        }
+    }
+
 ## License
 
 Copyright (c) 2013 - 2014 David Stutz

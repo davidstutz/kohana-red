@@ -1,7 +1,6 @@
 {
     "name": "davidstutz/kohana-red",
     "type": "kohana-module",
-    "version": "1.0.0",
     "description": "Secure authentication module for Kohana.",
     "homepage": "https://davidstutz.de",
     "license": "BSD-3-Clause",
