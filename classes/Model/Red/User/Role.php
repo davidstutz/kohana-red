@@ -4,7 +4,7 @@
  *
  * @package     Red
  * @author      David Stutz
- * @copyright   (c) 2013 - 2014 David Stutz
+ * @copyright   (c) 2013 - 2016 David Stutz
  * @license     http://opensource.org/licenses/bsd-3-clause
  */
 class Model_Red_User_Role extends ORM {
@@ -15,7 +15,7 @@ class Model_Red_User_Role extends ORM {
     protected $_table = 'user_roles';
     
     /**
-     * @var	array 	has many users
+     * @var    array     has many users
      */
     protected $_has_many = array(
         'users' => array(

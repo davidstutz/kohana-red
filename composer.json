@@ -4,7 +4,7 @@
     "description": "Secure authentication module for Kohana.",
     "homepage": "https://davidstutz.de",
     "license": "BSD-3-Clause",
-    "keywords": ["kohana", "framework", "authentication"],
+    "keywords": ["kohana"],
     "authors": [
         {
             "name": "David Stutz",

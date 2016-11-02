@@ -4,13 +4,13 @@
  *
  * @package     Red
  * @author      David Stutz
- * @copyright   (c) 2013 - 2014 David Stutz
+ * @copyright   (c) 2013 - 2016 David Stutz
  * @license     http://opensource.org/licenses/bsd-3-clause
  */
 class Model_Red_User_Token extends ORM {
 
     /**
-     * @var	string	used table
+     * @var    string    used table
      */
     protected $_table = 'user_tokens';
 
@@ -23,7 +23,7 @@ class Model_Red_User_Token extends ORM {
     );
 
     /**
-     * @var	array 	belongs to
+     * @var    array     belongs to
      */
     protected $_belongs_to = array('user' => array());
 
@@ -57,7 +57,7 @@ class Model_Red_User_Token extends ORM {
     public function create(Validation $validation = NULL) {
         do {
             $token = sha1(uniqid(Text::random('alnum', 32), TRUE));
-        } while (ORM::factory('user_token')->where('token', '=', $token)->count_all() > 0);
+        } while (ORM::factory('User_Token')->where('token', '=', $token)->count_all() > 0);
 
         $this->token = $token;
 

@@ -5,7 +5,7 @@
  *
  * @package     Red
  * @author      David Stutz
- * @copyright   (c) 2013 - 2014 David Stutz
+ * @copyright   (c) 2013 - 2016 David Stutz
  * @license     http://opensource.org/licenses/bsd-3-clause
  */
 class Model_Red_User extends ORM {
@@ -16,7 +16,7 @@ class Model_Red_User extends ORM {
     protected $_table = 'users';
     
     /**
-     * @var array 	has many tokens and logins
+     * @var array     has many tokens and logins
      */
     protected $_has_many = array(
         'tokens' => array(
@@ -38,7 +38,7 @@ class Model_Red_User extends ORM {
     /**
      * Filters for password.
      *
-     * @return	array 	filters
+     * @return    array     filters
      */
     public function filters() {
         return array(
@@ -51,21 +51,21 @@ class Model_Red_User extends ORM {
     /**
      * Check for unqiue username.
      *
-     * @param	string	username
-     * @return	boolean	unique
+     * @param    string    username
+     * @return    boolean    unique
      */
     public static function unique_username($username) {
-        return 0 == ORM::factory('user')->where('username', '=', $username)->count_all();
+        return 0 == ORM::factory('User')->where('username', '=', $username)->count_all();
     }
 
     /**
      * Check for unqiue email.
      *
-     * @param	string	email
-     * @return	boolean	unique
+     * @param    string    email
+     * @return    boolean    unique
      */
     public static function unique_email($email) {
-        return 0 == ORM::factory('user')->where('email', '=', $email)->count_all();
+        return 0 == ORM::factory('User')->where('email', '=', $email)->count_all();
     }
 
 }

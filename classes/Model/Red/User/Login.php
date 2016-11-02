@@ -4,13 +4,13 @@
  *
  * @package     Red
  * @author      David Stutz
- * @copyright   (c) 2013 - 2014 David Stutz
+ * @copyright   (c) 2013 - 2016 David Stutz
  * @license     http://opensource.org/licenses/bsd-3-clause
  */
 class Model_Red_User_Login extends ORM {
 
     /**
-     * @var	string	used table
+     * @var    string    used table
      */
     protected $_table = 'user_logins';
 

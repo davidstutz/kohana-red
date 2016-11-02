@@ -1,4 +1,5 @@
 ## [Red](index)
  - [Configuration](configuration)
+ - [Session Configuration](session-configuration)
  - [Usage](usage)
- - [SQL Scheme](sql-scheme)
+ - [SQL Schema](sql-schema)

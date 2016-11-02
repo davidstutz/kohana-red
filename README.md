@@ -10,7 +10,11 @@ Red is part of a set of Kohana modules:
 
 An introduction can be found [here](http://davidstutz.de/introduction-to-kohana-authentication-using-red/).
 
-For full documentation see the guide/ subfolder or use Kohana's [Userguide](https://github.com/kohana/userguide) module.
+**Note to use the correct SQL schema which can be found in`guide/red/sql-schema.md` or `schema.sql`!**
+
+For full documentation see the `guide/` subfolder or use Kohana's [Userguide](https://github.com/kohana/userguide) module.
+
+A demonstration application can be found at [davidstutz/kohana-demo](https://github.com/davidstutz/kohana-demo).
 
 ## Composer
 
@@ -30,7 +34,7 @@ Installation via composer:
 
 ## License
 
-Copyright (c) 2013 - 2014 David Stutz
+Copyright (c) 2013 - 2016 David Stutz
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
