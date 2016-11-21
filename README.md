@@ -16,22 +16,6 @@ For full documentation see the `guide/` subfolder or use Kohana's [Userguide](ht
 
 A demonstration application can be found at [davidstutz/kohana-demo](https://github.com/davidstutz/kohana-demo).
 
-## Composer
-
-Installation via composer:
-
-    {
-        "repositories": [
-            {
-                "type": "vcs",
-                "url": "https://github.com/davidstutz/kohana-red"
-            }
-        ],
-        "require": {
-            "davidstutz/kohana-red": "dev-master"
-        }
-    }
-
 ## License
 
 Copyright (c) 2013 - 2016 David Stutz
